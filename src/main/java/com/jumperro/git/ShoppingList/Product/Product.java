@@ -2,11 +2,8 @@ package com.jumperro.git.ShoppingList.Product;
 
 
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.lang.NonNullFields;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -28,5 +25,11 @@ public class Product {
     private String type;
 
     public Product() {
+    }
+
+    public void update(Product toUpdate){
+        this.name = name;
+        this.amount = amount;
+        this.type = type;
     }
 }
