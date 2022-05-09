@@ -12,16 +12,9 @@ import java.util.Optional;
     public WelcomeService() {}
 
      public String PrepareGreeting(String name){
-       // Objects.requireNonNull(name, "Please provide a name");
         String welcomeMsg = "Hello";
-        String nameToWelcome;
-        // nameToWelcome = Optional.ofNullable(name).orElse(fallback_name);
-        if(name.isBlank() || name.isEmpty()){
-            nameToWelcome = fallback_name;
-        }
-        else
-            nameToWelcome = name;
-         return welcomeMsg + " " + nameToWelcome + " !";
+        String nameToWelcome = Optional.ofNullable(name).orElse(fallback_name);
+        return welcomeMsg + " " + nameToWelcome + " !";
 
     }
 }
