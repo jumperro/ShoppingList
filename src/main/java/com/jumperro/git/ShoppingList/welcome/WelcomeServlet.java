@@ -10,7 +10,7 @@ import javax.servlet.annotation.WebServlet;
 @RestController
 @WebServlet(name = "Karol", urlPatterns = {"/api"})
  class WelcomeServlet implements AppLogger {
-    private WelcomeService service;
+    private final WelcomeService service;
 
 WelcomeServlet(WelcomeService service){
 this.service=service;

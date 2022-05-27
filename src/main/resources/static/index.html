@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SHOPPING LIST</title>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css"
+          integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+</head>
+<body>
+
+<main style="width: 40%; margin: 0 auto">
+    <div id="welcome" style="text-align: center">
+        <h1>Introduce yourself</h1>
+    </div>
+    <form id="welcomeForm" class="pure-form pure-g pure-form-aligned">
+       <input class="pure-input-rounded pure-u-1" name="name" placeholder="name" id="text_name">
+       <button id="welcomeFormBtn" class="pure-button pure-button-primary pure-u-1">Submit</button>
+    </form>
+    <form id="AddForm" class="pure-form" style="text-align: center; display: none">
+        <input type="radio" id="add_btn" name="addProduct" value="add" style="margin-right: 3px; display: inline">
+        <label style="display: inline-block; width: auto; letter-spacing: initial; margin-right: 5%; margin-top: 5px"  >Add new item</label>
+        <input type="radio" id="update_btn" name="updateProduct" value="update" style="margin-right: 3px; display: inline">
+        <label style="display: inline-block; width: auto; letter-spacing: initial; margin-right: 5%" >Update an item</label>
+        <input type="radio" id="delete_btn" name="deleteProduct" value="delete" style="margin-right: 3px; display: inline">
+        <label style="display: inline-block; width: auto; letter-spacing: initial; margin-right: 5%">Delete an item</label>
+        <input type="radio" id="show_btn" name="showProducts" value="show" style="margin-right: 3px; display: inline">
+        <label style="display: inline-block; width: auto; letter-spacing: initial; margin-right: 5%">Show</label><br>
+        <button id="AddFormBtn" class="pure-button pure-button-primary pure-u-1">Submit</button>
+        <table style="display: inline-block; width: auto; letter-spacing: initial">
+            <tr>
+            <td><th style="display: inline-block; width: auto; letter-spacing: initial; margin-right: 5%"></th></td>
+            <td><th style="display: inline-block; width: auto; letter-spacing: initial; margin-right: 5%">desription</th></td>
+            <th>amount</th>
+            <th>type</th>
+            <th>created_on</th>
+            </tr>
+        </table>
+    </form >
+    <form id="trzeci" style="display: none; text-autospace: initial; text-align: center">
+        <fieldset>
+
+        <input id="todoText" class="pure-input-rounded pure-input-2-3" placeholder="new TODO">
+        <button id="addTodo" class="pure-button pure-button-primary">+</button>
+    </fieldset>
+        <fieldset id="Add"></fieldset>
+    </form>
+
+
+</main>
+<script>
+    const API_URL = 'http://localhost:8080';
+    const API_URL_ADD = `${API_URL}/api`;
+
+    function AddFunction(){
+        const welcomeForm = document.getElementById('welcomeForm');
+
+        document.getElementById('welcomeFormBtn').addEventListener('click', (event) => {
+            event.preventDefault();
+            const formObj = {
+                name: welcomeForm.elements.name.value,
+            };
+            fetch(`${API_URL_ADD}?${new URLSearchParams(formObj)}`)
+                .then(response => response.text())
+                .then((text) => {
+                    document.getElementById('welcome').innerHTML = `
+                <h1>${text}</h1>
+            `;
+                    welcomeForm.remove();
+                    document.getElementById('AddForm').style.display = 'inline';
+                });
+        });
+    }
+
+    AddFunction();
+
+    function trzecia() {
+        const addForm = document.getElementById('AddForm');
+
+        document.getElementById('AddFormBtn').addEventListener('click', (event) => {
+            event.preventDefault();
+        });
+          document.getElementById('trzeci').style.display = 'inline';
+    }
+</script>
+
+
+</body>
+</html>

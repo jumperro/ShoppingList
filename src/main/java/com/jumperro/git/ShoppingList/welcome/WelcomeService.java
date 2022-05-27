@@ -1,8 +1,6 @@
 package com.jumperro.git.ShoppingList.welcome;
 
 import org.springframework.stereotype.Service;
-
-import java.util.Objects;
 import java.util.Optional;
 @Service
  public class WelcomeService {
