@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:https="http://www.w3.org/1999/xhtml" xmlns:http="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>SHOPPING LIST</title>
@@ -17,39 +17,78 @@
        <button id="welcomeFormBtn" class="pure-button pure-button-primary pure-u-1">Submit</button>
     </form>
     <form id="AddForm" class="pure-form" style="text-align: center; display: none">
-        <input type="radio" id="add_btn" name="addProduct" value="add" style="margin-right: 3px; display: inline">
-        <label style="display: inline-block; width: auto; letter-spacing: initial; margin-right: 5%; margin-top: 5px"  >Add new item</label>
-        <input type="radio" id="update_btn" name="updateProduct" value="update" style="margin-right: 3px; display: inline">
-        <label style="display: inline-block; width: auto; letter-spacing: initial; margin-right: 5%" >Update an item</label>
-        <input type="radio" id="delete_btn" name="deleteProduct" value="delete" style="margin-right: 3px; display: inline">
-        <label style="display: inline-block; width: auto; letter-spacing: initial; margin-right: 5%">Delete an item</label>
-        <input type="radio" id="show_btn" name="showProducts" value="show" style="margin-right: 3px; display: inline">
-        <label style="display: inline-block; width: auto; letter-spacing: initial; margin-right: 5%">Show</label><br>
-        <button id="AddFormBtn" class="pure-button pure-button-primary pure-u-1">Submit</button>
-        <table style="display: inline-block; width: auto; letter-spacing: initial">
-            <tr>
-            <td><th style="display: inline-block; width: auto; letter-spacing: initial; margin-right: 5%"></th></td>
-            <td><th style="display: inline-block; width: auto; letter-spacing: initial; margin-right: 5%">desription</th></td>
-            <th>amount</th>
-            <th>type</th>
-            <th>created_on</th>
-            </tr>
-        </table>
-    </form >
-    <form id="trzeci" style="display: none; text-autospace: initial; text-align: center">
         <fieldset>
+            <!--             <input type="radio" id="add_btn" name="addProduct" value="add" style="margin-right: 3px; display: inline">
+            <label style="display: inline-block; width: auto; letter-spacing: initial; margin-right: 5%; margin-top: 5px"  >Add new item</label>
+                    <input type="radio" id="update_btn" name="updateProduct" value="update" style="margin-right: 3px; display: inline">
+                    <label class="preview-label" style="display: inline-block; width: auto; letter-spacing: initial; margin-right: 5%" >Update an item</label>
+                    <input type="radio" id="delete_btn" name="deleteProduct" value="delete" style="margin-right: 3px; display: inline">
+                    <label style="display: inline-block; width: auto; letter-spacing: initial; margin-right: 5%">Delete an item</label>
+                    <input type="radio" id="show_btn" name="showProducts" value="show" style="margin-right: 3px; display: inline">
+                    <label style="display: inline-block; width: auto; letter-spacing: initial; margin-right: 5%">Show</label><br>-->
+                    <button id="AddFormBtn" class="pure-button pure-button-primary pure-u-1">Submit</button>
+        </fieldset>
+        <fieldset>
+            <input id="todoText" class="pure-input-rounded pure-input-2-3" placeholder="name">
+            <input id="todoAmount" class="pure-input-rounded pure-input-2-3" placeholder="amount">
+            <input id="todoType" class="pure-input-rounded pure-input-2-3" placeholder="type">
 
-        <input id="todoText" class="pure-input-rounded pure-input-2-3" placeholder="new TODO">
-        <button id="addTodo" class="pure-button pure-button-primary">+</button>
-    </fieldset>
-        <fieldset id="Add"></fieldset>
-    </form>
-
+            <button id="addTodo" class="pure-button pure-button-primary">+</button>
+            <br>
+            <button id="print-btn"  style="width: 50px; height: 50px; border-radius: 50%"><img style="width: 40px; height: 40px" src="https://cdn-icons-png.flaticon.com/512/3233/3233446.png" alt="PRINT"></button>
+        </fieldset>
+        <fieldset id="allTodos"></fieldset>
+    </form >
 
 </main>
 <script>
+
+
     const API_URL = 'http://localhost:8080';
     const API_URL_ADD = `${API_URL}/api`;
+    const API_URL_ALL = `${API_URL_ADD}/list`;
+    const todoText = document.getElementById('todoText');
+    const ttype = document.getElementById('todoType');
+    const tamount = document.getElementById('todoAmount');
+
+    AddFunction();
+
+
+    // TODO: remove
+    createNewTodo({ id: 6, name: 'mock 1', amount: 1});
+    createNewTodo({ id: 7, name: 'mock 2', amount: 1});
+
+    fetch(API_URL_ALL)
+        .then(processOkResponse)
+        .then(list => list.forEach(createNewTodo))
+
+    document.getElementById('addTodo').addEventListener('click', (event) => {
+        event.preventDefault();
+        fetch(API_URL_ALL, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name: todoText.value })
+        })
+
+            .then(processOkResponse)
+            .then(createNewTodo)
+            .then(() => todoText.value = '')
+            .catch(console.warn);
+    });
+
+    function createNewTodo(todo) {
+        const label = document.createElement('label');
+        label.classList.add('label')
+            const label1 = document.createElement('template');
+              label.appendChild(label1);
+        label.appendChild(document.createTextNode(` ${todo.name} `));
+        label.appendChild(document.createTextNode(` ${todo.amount} `));
+        document.getElementById('allTodos').appendChild(label).style.display= 'block';
+
+    }
 
     function AddFunction(){
         const welcomeForm = document.getElementById('welcomeForm');
@@ -66,21 +105,30 @@
                 <h1>${text}</h1>
             `;
                     welcomeForm.remove();
-                    document.getElementById('AddForm').style.display = 'inline';
-                });
+                    document.getElementById('AddForm').style.display = 'table';
+                    });
         });
     }
 
-    AddFunction();
+    document.getElementById('print-btn').addEventListener('click', (event) => {
+        event.preventDefault();
+        const f = document.getElementById("allTodos").innerHTML;
+        const a = window.open();
+        a.document.write(document.getElementById('welcome').innerHTML);
+        a.document.write(f);
+        a.print();
+    })
 
-    function trzecia() {
-        const addForm = document.getElementById('AddForm');
 
-        document.getElementById('AddFormBtn').addEventListener('click', (event) => {
-            event.preventDefault();
-        });
-          document.getElementById('trzeci').style.display = 'inline';
+
+    function processOkResponse(response = {}) {
+        if (response.ok) {
+            return response.json();
+        }
+        throw new Error(`Status not 200 (${response.status})`);
     }
+
+
 </script>
 
 
