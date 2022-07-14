@@ -18,15 +18,13 @@
     </form>
     <form id="AddForm" class="pure-form" style="text-align: center; display: none">
         <fieldset>
-           <button id="AddFormBtn" class="pure-button pure-button-primary pure-u-1">Submit</button>
+            <input id="name" class="pure-input-rounded pure-input-2-3" style="width: available" placeholder="name">
+            <input id="amount" class="pure-input-rounded pure-input-2-3" style="width: available" placeholder="amount">
+            <input id="uom" class="pure-input-rounded pure-input-2-3" style="width: available" placeholder="unit of measure">
+            <input id="idToDel" type="number" class="pure-input-rounded pure-input-2-3" style="width: available" placeholder="Please provide an id to delete">
         </fieldset>
         <fieldset>
-            <input id="name" class="pure-input-rounded pure-input-2-3" placeholder="name">
-            <input id="amount" class="pure-input-rounded pure-input-2-3" placeholder="amount">
-            <input id="uom" class="pure-input-rounded pure-input-2-3" placeholder="unit of measure">
             <button id="addProduct" class="pure-button pure-button-primary">POST</button>
-            <br>
-            <input id="idToDel" type="number" class="pure-input-rounded pure-input-2-3" placeholder="Please provide an id to delete">
             <button id="delProduct" class="pure-button pure-button-primary">DELETE</button>
             <br>
             <button id="print-btn"  style="width: 50px; height: 50px; border-radius: 50%"><img style="width: 40px; height: 40px" src="https://cdn-icons-png.flaticon.com/512/3233/3233446.png" alt="PRINT"></button>
@@ -47,7 +45,7 @@
 
     fetch(API_URL_ALL)
         .then(processOkResponse)
-        .then(list => list.forEach(createNewTodo))
+        .then(list => list.forEach(createNewProduct))
 
     document.getElementById('addProduct').addEventListener('click', (event) => {
         event.preventDefault();
@@ -60,14 +58,14 @@
             body: JSON.stringify({ name: pName.value, type : pUom.value, amount: pAmount.value })
         })
             .then(processOkResponse)
-            .then(createNewTodo)
+            .then(createNewProduct)
             .then(() => pName.value = '')
             .then(() => pAmount.value = '')
             .then(() => pUom.value = '')
             .catch(console.warn);
     });
 
-    function createNewTodo(product) {
+    function createNewProduct(product) {
         const label = document.createElement('label');
         const l1 = document.createElement('label');
         const l2 = document.createElement('label');
@@ -85,7 +83,7 @@
         label.style.wordSpacing='30%';
             }
 
-    document.getElementById('delTodo').addEventListener('click', (event) => {
+    document.getElementById('delProduct').addEventListener('click', (event) => {
         event.preventDefault();
         removeTodo();
     });
@@ -125,8 +123,6 @@
         a.document.write(f);
         a.print();
     })
-
-
 
     function processOkResponse(response = {}) {
         if (response.ok) {
