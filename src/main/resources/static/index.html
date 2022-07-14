@@ -18,51 +18,38 @@
     </form>
     <form id="AddForm" class="pure-form" style="text-align: center; display: none">
         <fieldset>
-            <!--             <input type="radio" id="add_btn" name="addProduct" value="add" style="margin-right: 3px; display: inline">
-            <label style="display: inline-block; width: auto; letter-spacing: initial; margin-right: 5%; margin-top: 5px"  >Add new item</label>
-                    <input type="radio" id="update_btn" name="updateProduct" value="update" style="margin-right: 3px; display: inline">
-                    <label class="preview-label" style="display: inline-block; width: auto; letter-spacing: initial; margin-right: 5%" >Update an item</label>
-                    <input type="radio" id="delete_btn" name="deleteProduct" value="delete" style="margin-right: 3px; display: inline">
-                    <label style="display: inline-block; width: auto; letter-spacing: initial; margin-right: 5%">Delete an item</label>
-                    <input type="radio" id="show_btn" name="showProducts" value="show" style="margin-right: 3px; display: inline">
-                    <label style="display: inline-block; width: auto; letter-spacing: initial; margin-right: 5%">Show</label><br>-->
-                    <button id="AddFormBtn" class="pure-button pure-button-primary pure-u-1">Submit</button>
+           <button id="AddFormBtn" class="pure-button pure-button-primary pure-u-1">Submit</button>
         </fieldset>
         <fieldset>
-            <input id="todoText" class="pure-input-rounded pure-input-2-3" placeholder="name">
-            <input id="todoAmount" class="pure-input-rounded pure-input-2-3" placeholder="amount">
-            <input id="todoType" class="pure-input-rounded pure-input-2-3" placeholder="type">
-
-            <button id="addTodo" class="pure-button pure-button-primary">+</button>
+            <input id="name" class="pure-input-rounded pure-input-2-3" placeholder="name">
+            <input id="amount" class="pure-input-rounded pure-input-2-3" placeholder="amount">
+            <input id="uom" class="pure-input-rounded pure-input-2-3" placeholder="unit of measure">
+            <button id="addProduct" class="pure-button pure-button-primary">POST</button>
+            <br>
+            <input id="idToDel" type="number" class="pure-input-rounded pure-input-2-3" placeholder="Please provide an id to delete">
+            <button id="delProduct" class="pure-button pure-button-primary">DELETE</button>
             <br>
             <button id="print-btn"  style="width: 50px; height: 50px; border-radius: 50%"><img style="width: 40px; height: 40px" src="https://cdn-icons-png.flaticon.com/512/3233/3233446.png" alt="PRINT"></button>
         </fieldset>
-        <fieldset id="allTodos"></fieldset>
+        <fieldset id="allProducts" >
+          </fieldset>
     </form >
-
 </main>
 <script>
-
-
     const API_URL = 'http://localhost:8080';
     const API_URL_ADD = `${API_URL}/api`;
     const API_URL_ALL = `${API_URL_ADD}/list`;
-    const todoText = document.getElementById('todoText');
-    const ttype = document.getElementById('todoType');
-    const tamount = document.getElementById('todoAmount');
+    const pName = document.getElementById('name');
+    const pUom = document.getElementById('uom');
+    const pAmount = document.getElementById('amount');
 
     AddFunction();
-
-
-    // TODO: remove
-    createNewTodo({ id: 6, name: 'mock 1', amount: 1});
-    createNewTodo({ id: 7, name: 'mock 2', amount: 1});
 
     fetch(API_URL_ALL)
         .then(processOkResponse)
         .then(list => list.forEach(createNewTodo))
 
-    document.getElementById('addTodo').addEventListener('click', (event) => {
+    document.getElementById('addProduct').addEventListener('click', (event) => {
         event.preventDefault();
         fetch(API_URL_ALL, {
             method: 'POST',
@@ -70,24 +57,44 @@
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ name: todoText.value })
+            body: JSON.stringify({ name: pName.value, type : pUom.value, amount: pAmount.value })
         })
-
             .then(processOkResponse)
             .then(createNewTodo)
-            .then(() => todoText.value = '')
+            .then(() => pName.value = '')
+            .then(() => pAmount.value = '')
+            .then(() => pUom.value = '')
             .catch(console.warn);
     });
 
-    function createNewTodo(todo) {
+    function createNewTodo(product) {
         const label = document.createElement('label');
-        label.classList.add('label')
-            const label1 = document.createElement('template');
-              label.appendChild(label1);
-        label.appendChild(document.createTextNode(` ${todo.name} `));
-        label.appendChild(document.createTextNode(` ${todo.amount} `));
-        document.getElementById('allTodos').appendChild(label).style.display= 'block';
+        const l1 = document.createElement('label');
+        const l2 = document.createElement('label');
+        const l3 = document.createElement('label');
+        const l4 = document.createElement('label');
+        label.classList.add('label');
+        l1.appendChild(document.createTextNode(`  ID:${product.id}. `));
+        l2.appendChild(document.createTextNode(` ${product.name} `));
+        l3.appendChild(document.createTextNode(` ${product.amount} `));
+        l4.appendChild(document.createTextNode(` ${product.type} `));
+        label.appendChild(l1).appendChild(l2).appendChild(l3).appendChild(l4)
+        document.getElementById('allProducts').appendChild(label);
+        label.style.display= 'table';
+        label.style.paddingLeft='40%';
+        label.style.wordSpacing='30%';
+            }
 
+    document.getElementById('delTodo').addEventListener('click', (event) => {
+        event.preventDefault();
+        removeTodo();
+    });
+
+    function removeTodo() {
+        const d = document.getElementById('idToDel').value;
+        fetch(`${API_URL_ALL}/${d}`, { method: 'DELETE' })
+            .then(processOkResponse)
+            .catch(console.info)
     }
 
     function AddFunction(){
@@ -105,14 +112,14 @@
                 <h1>${text}</h1>
             `;
                     welcomeForm.remove();
-                    document.getElementById('AddForm').style.display = 'table';
+                    document.getElementById('AddForm').style.display = 'block';
                     });
         });
     }
 
     document.getElementById('print-btn').addEventListener('click', (event) => {
         event.preventDefault();
-        const f = document.getElementById("allTodos").innerHTML;
+        const f = document.getElementById("allProducts").innerHTML;
         const a = window.open();
         a.document.write(document.getElementById('welcome').innerHTML);
         a.document.write(f);
@@ -127,10 +134,6 @@
         }
         throw new Error(`Status not 200 (${response.status})`);
     }
-
-
 </script>
-
-
 </body>
 </html>

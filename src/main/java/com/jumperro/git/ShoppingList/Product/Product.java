@@ -21,15 +21,11 @@ public class Product {
     private int id;
     private String name;
     private int amount;
-    @NotBlank @NotNull(message = "select one from: piece, pieces, litre, litres, kilo, kilos")
     private String type;
+
 
     public Product() {
     }
 
-    public void update(Product toUpdate){
-        this.name = name;
-        this.amount = amount;
-        this.type = type;
-    }
+
 }

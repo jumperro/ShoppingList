@@ -10,9 +10,9 @@ import java.util.Optional;
     public WelcomeService() {}
 
      public String PrepareGreeting(String name){
-        String welcomeMsg = "Hello";
+        String welcomeMsg = "shopping list.";
         String nameToWelcome = Optional.ofNullable(name).orElse(fallback_name);
-        return welcomeMsg + " " + nameToWelcome + " !";
+        return  nameToWelcome +"'s" + " " + welcomeMsg + " !";
 
     }
 }
