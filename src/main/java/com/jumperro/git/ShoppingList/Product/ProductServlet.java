@@ -4,14 +4,12 @@ import com.jumperro.git.ShoppingList.AppLogger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @Controller
 @RequestMapping("/api/list")
 public class ProductServlet implements AppLogger {
     private ProductRepository repository;
-    public Product product;
 
     public ProductServlet(ProductRepository repository) {
         this.repository = repository;
