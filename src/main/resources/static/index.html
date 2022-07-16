@@ -23,7 +23,7 @@
             <input id="idToDel" type="number" class="pure-input-rounded pure-input-2-3" style="width: available" placeholder="Please provide an id to delete">
         </fieldset>
         <fieldset>
-            <button id="addProduct" class="pure-button pure-button-primary">POST</button>
+            <button id="addProduct" class="pure-button pure-button-primary">ADD</button>
             <button id="delProduct" class="pure-button pure-button-primary">DELETE</button>
             <br>
             <button id="print-btn"  style="width: 50px; height: 50px; border-radius: 50%"><img style="width: 40px; height: 40px" src="https://cdn-icons-png.flaticon.com/512/3233/3233446.png" alt="PRINT"></button>
@@ -84,12 +84,13 @@
 
     document.getElementById('delProduct').addEventListener('click', (event) => {
         event.preventDefault();
-        removeTodo();
+        removeProduct();
     });
 
-    function removeTodo() {
+    function removeProduct() {
         const d = document.getElementById('idToDel').value;
-        fetch(`${API_URL_ALL}/${d}`, { method: 'DELETE' })
+
+        fetch(`${API_URL_ALL}/${d}`, {method: 'DELETE'})
             .then(processOkResponse)
             .catch(console.info)
     }
