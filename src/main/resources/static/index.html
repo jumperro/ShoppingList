@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css"
           integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
 </head>
-<body>
+<body style="background-color: rgb(175, 214, 250);">
 <main style="width: 40%; margin: 0 auto">
     <div id="welcome" style="text-align: center">
         <h1>Introduce yourself</h1>
@@ -20,16 +20,22 @@
             <input id="name" class="pure-input-rounded pure-input-2-3" style="width: available" placeholder="name">
             <input id="amount" class="pure-input-rounded pure-input-2-3" style="width: available" placeholder="amount">
             <input id="uom" class="pure-input-rounded pure-input-2-3" style="width: available" placeholder="unit of measure">
+            <br>
+            <button id="add1Product" class="pure-button pure-button-primary" style="margin: 20px">ADD</button>
+            <br>
             <input id="idToDel" type="number" class="pure-input-rounded pure-input-2-3" style="width: available" placeholder="Please provide an id to delete">
+            <br>
+            <button id="delProduct" class="pure-button pure-button-primary" style="margin: 20px">DELETE</button>
+            </fieldset>
+        <fieldset id="allProducts" >
+
         </fieldset>
         <fieldset>
-            <button id="addProduct" class="pure-button pure-button-primary">ADD</button>
-            <button id="delProduct" class="pure-button pure-button-primary">DELETE</button>
             <br>
-            <button id="print-btn"  style="width: 50px; height: 50px; border-radius: 50%"><img style="width: 40px; height: 40px" src="https://cdn-icons-png.flaticon.com/512/3233/3233446.png" alt="PRINT"></button>
+            <button id="print-btn"  style="width: 50px; height: 50px; border-radius: 50%; margin-right: 50px; margin-top: 20px"><img style="width: 40px; height: 40px" src="https://cdn-icons-png.flaticon.com/512/3233/3233446.png" alt="PRINT"></button>
+            <button id="email" style="width: 50px; height: 50px; border-radius: 50%; margin-left: 50px; margin-top: 20px"><img style="width: 40px; height: 40px" src="https://img.icons8.com/emoji/344/e-mail.png" alt="EMAIL"> </button>
+
         </fieldset>
-        <fieldset id="allProducts" >
-          </fieldset>
     </form >
 </main>
 <script>
@@ -75,7 +81,7 @@
         l2.appendChild(document.createTextNode(` ${product.name} `));
         l3.appendChild(document.createTextNode(` ${product.amount} `));
         l4.appendChild(document.createTextNode(` ${product.type} `));
-        label.appendChild(l1).appendChild(l2).appendChild(l3).appendChild(l4)
+        label.appendChild(l1).appendChild(l2).appendChild(l3).appendChild(l4).append('\n');
         document.getElementById('allProducts').appendChild(label);
         label.style.display= 'table';
         label.style.paddingLeft='40%';
@@ -122,6 +128,16 @@
         a.document.write(document.getElementById('welcome').innerHTML);
         a.document.write(f);
         a.print();
+    })
+
+    document.getElementById('email').addEventListener('click', (event)=> {
+        event.preventDefault();
+        const f = document.getElementById('allProducts').innerHTML;
+        const a = window.open();
+        a.document.write(document.getElementById('welcome').innerHTML);
+        a.document.write(f);
+        window.open('mailto:jumperro@gmail.com?subject=Shopping List&body='+document.getElementById('allProducts').textContent);
+
     })
 
     function processOkResponse(response = {}) {
