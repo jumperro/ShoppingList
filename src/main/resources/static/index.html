@@ -12,36 +12,44 @@
         <h1>Introduce yourself</h1>
     </div>
     <form id="welcomeForm" class="pure-form pure-g pure-form-aligned">
-       <input class="pure-input-rounded pure-u-1" name="name" placeholder="name" id="text_name">
-       <button id="welcomeFormBtn" class="pure-button pure-button-primary pure-u-1">Submit</button>
+        <input class="pure-input-rounded pure-u-1" name="name" placeholder="name" id="text_name">
+        <button id="welcomeFormBtn" class="pure-button pure-button-primary pure-u-1">Submit</button>
     </form>
     <form id="AddForm" class="pure-form" style="text-align: center; display: none">
         <fieldset>
             <input id="name" class="pure-input-rounded pure-input-2-3" style="width: available" placeholder="name">
             <input id="amount" class="pure-input-rounded pure-input-2-3" style="width: available" placeholder="amount">
-            <input id="uom" class="pure-input-rounded pure-input-2-3" style="width: available" placeholder="unit of measure">
+            <input id="uom" class="pure-input-rounded pure-input-2-3" style="width: available"
+                   placeholder="unit of measure">
             <br>
-            <button id="add1Product" class="pure-button pure-button-primary" style="margin: 20px">ADD</button>
+            <button id="addProduct" class="pure-button pure-button-primary" style="margin: 20px">ADD</button>
             <br>
-            <input id="idToDel" type="number" class="pure-input-rounded pure-input-2-3" style="width: available" placeholder="Please provide an id to delete">
+            <input id="idToDel" type="number" class="pure-input-rounded pure-input-2-3" style="width: available"
+                   placeholder="Please provide an id to delete">
             <br>
             <button id="delProduct" class="pure-button pure-button-primary" style="margin: 20px">DELETE</button>
-            </fieldset>
-        <fieldset id="allProducts" >
+        </fieldset>
+        <fieldset id="allProducts">
 
         </fieldset>
         <fieldset>
             <br>
-            <button id="print-btn"  style="width: 50px; height: 50px; border-radius: 50%; margin-right: 50px; margin-top: 20px"><img style="width: 40px; height: 40px" src="https://cdn-icons-png.flaticon.com/512/3233/3233446.png" alt="PRINT"></button>
-            <button id="email" style="width: 50px; height: 50px; border-radius: 50%; margin-left: 50px; margin-top: 20px"><img style="width: 40px; height: 40px" src="https://img.icons8.com/emoji/344/e-mail.png" alt="EMAIL"> </button>
+            <button id="print-btn"
+                    style="width: 50px; height: 50px; border-radius: 50%; margin-right: 50px; margin-top: 20px"><img
+                    style="width: 40px; height: 40px" src="https://cdn-icons-png.flaticon.com/512/3233/3233446.png"
+                    alt="PRINT"></button>
+            <button id="email"
+                    style="width: 50px; height: 50px; border-radius: 50%; margin-left: 50px; margin-top: 20px"><img
+                    style="width: 40px; height: 40px" src="https://img.icons8.com/emoji/344/e-mail.png" alt="EMAIL">
+            </button>
 
         </fieldset>
-    </form >
+    </form>
 </main>
 <script>
     const API_URL = 'http://localhost:8080';
     const API_URL_ADD = `${API_URL}/api`;
-    const API_URL_ALL = `${API_URL_ADD}/list`;
+    const API_URL_ALL = `${API_URL_ADD}/products`;
     const pName = document.getElementById('name');
     const pUom = document.getElementById('uom');
     const pAmount = document.getElementById('amount');
@@ -60,7 +68,7 @@
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ name: pName.value, type : pUom.value, amount: pAmount.value })
+            body: JSON.stringify({name: pName.value, type: pUom.value, amount: pAmount.value})
         })
             .then(processOkResponse)
             .then(createNewProduct)
@@ -83,10 +91,10 @@
         l4.appendChild(document.createTextNode(` ${product.type} `));
         label.appendChild(l1).appendChild(l2).appendChild(l3).appendChild(l4).append('\n');
         document.getElementById('allProducts').appendChild(label);
-        label.style.display= 'table';
-        label.style.paddingLeft='40%';
-        label.style.wordSpacing='30%';
-            }
+        label.style.display = 'table';
+        label.style.paddingLeft = '40%';
+        label.style.wordSpacing = '30%';
+    }
 
     document.getElementById('delProduct').addEventListener('click', (event) => {
         event.preventDefault();
@@ -101,7 +109,7 @@
             .catch(console.info)
     }
 
-    function AddFunction(){
+    function AddFunction() {
         const welcomeForm = document.getElementById('welcomeForm');
 
         document.getElementById('welcomeFormBtn').addEventListener('click', (event) => {
@@ -117,7 +125,7 @@
             `;
                     welcomeForm.remove();
                     document.getElementById('AddForm').style.display = 'block';
-                    });
+                });
         });
     }
 
@@ -130,13 +138,9 @@
         a.print();
     })
 
-    document.getElementById('email').addEventListener('click', (event)=> {
+    document.getElementById('email').addEventListener('click', (event) => {
         event.preventDefault();
-        const f = document.getElementById('allProducts').innerHTML;
-        const a = window.open();
-        a.document.write(document.getElementById('welcome').innerHTML);
-        a.document.write(f);
-        window.open('mailto:jumperro@gmail.com?subject=Shopping List&body='+document.getElementById('allProducts').textContent);
+        window.open('mailto:jumperro@gmail.com?subject=Shopping List&body=' + document.getElementById('allProducts').textContent);
 
     })
 

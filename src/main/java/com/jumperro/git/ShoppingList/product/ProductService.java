@@ -1,4 +1,4 @@
-package com.jumperro.git.ShoppingList.Product;
+package com.jumperro.git.ShoppingList.product;
 
 import org.springframework.stereotype.Service;
 
