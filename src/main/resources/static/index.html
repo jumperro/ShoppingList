@@ -5,42 +5,37 @@
     <title>SHOPPING LIST</title>
     <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css"
           integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body style="background-color: rgb(175, 214, 250);">
-<main style="width: 40%; margin: 0 auto">
-    <div id="welcome" style="text-align: center">
+<body>
+<main style="width: 60%; margin: 0 auto">
+    <div id="welcome">
         <h1>Introduce yourself</h1>
     </div>
     <form id="welcomeForm" class="pure-form pure-g pure-form-aligned">
-        <input class="pure-input-rounded pure-u-1" name="name" placeholder="name" id="text_name">
-        <button id="welcomeFormBtn" class="pure-button pure-button-primary pure-u-1">Submit</button>
+        <input class="pure-input-rounded pure-u-1" name="name" placeholder="name" id="text_name" required>
+        <button id="welcomeFormBtn" class="pure-button pure-button-primary pure-u-1"  >Submit</button>
     </form>
-    <form id="AddForm" class="pure-form" style="text-align: center; display: none">
+    <form id="AddForm" class="add-form">
         <fieldset>
-            <input id="name" class="pure-input-rounded pure-input-2-3" style="width: available" placeholder="name">
-            <input id="amount" class="pure-input-rounded pure-input-2-3" style="width: available" placeholder="amount">
-            <input id="uom" class="pure-input-rounded pure-input-2-3" style="width: available"
-                   placeholder="unit of measure">
+            <input id="name" class="pure-input-rounded pure-input-2-3" placeholder="name">
+            <input id="amount" class="pure-input-rounded pure-input-2-3"  placeholder="amount">
+            <input id="uom" class="pure-input-rounded pure-input-2-3" placeholder="unit of measure">
             <br>
-            <button id="addProduct" class="pure-button pure-button-primary" style="margin: 20px">ADD</button>
+            <button id="addProduct" class="pure-button pure-button-primary">ADD</button>
             <br>
-            <input id="idToDel" type="number" class="pure-input-rounded pure-input-2-3" style="width: available"
-                   placeholder="Please provide an id to delete">
+            <input id="idToDel" type="number" class="pure-input-rounded pure-input-2-3" placeholder="Please provide an id to delete">
             <br>
-            <button id="delProduct" class="pure-button pure-button-primary" style="margin: 20px">DELETE</button>
+            <button id="delProduct" class="pure-button pure-button-primary">DELETE</button>
         </fieldset>
         <fieldset id="allProducts">
 
         </fieldset>
         <fieldset>
             <br>
-            <button id="print-btn"
-                    style="width: 50px; height: 50px; border-radius: 50%; margin-right: 50px; margin-top: 20px"><img
-                    style="width: 40px; height: 40px" src="https://cdn-icons-png.flaticon.com/512/3233/3233446.png"
+            <button id="print-btn"><img class="event-img" src="https://cdn-icons-png.flaticon.com/512/3233/3233446.png"
                     alt="PRINT"></button>
-            <button id="email"
-                    style="width: 50px; height: 50px; border-radius: 50%; margin-left: 50px; margin-top: 20px"><img
-                    style="width: 40px; height: 40px" src="https://img.icons8.com/emoji/344/e-mail.png" alt="EMAIL">
+            <button id="email-btn"><img class="event-img" src="https://img.icons8.com/emoji/344/e-mail.png" alt="EMAIL">
             </button>
 
         </fieldset>
@@ -53,6 +48,8 @@
     const pName = document.getElementById('name');
     const pUom = document.getElementById('uom');
     const pAmount = document.getElementById('amount');
+    const input = document.getElementById('text_name');
+    const btn = document.getElementById('welcomeFormBtn');
 
     AddFunction();
 
@@ -114,9 +111,15 @@
 
         document.getElementById('welcomeFormBtn').addEventListener('click', (event) => {
             event.preventDefault();
+            if(!/\S/.test(input.value))
+            {
+                alert("Please provide valid name!")
+                window.location.reload();
+            }
             const formObj = {
                 name: welcomeForm.elements.name.value,
             };
+
             fetch(`${API_URL_ADD}?${new URLSearchParams(formObj)}`)
                 .then(response => response.text())
                 .then((text) => {
@@ -150,6 +153,7 @@
         }
         throw new Error(`Status not 200 (${response.status})`);
     }
+
 </script>
 </body>
 </html>

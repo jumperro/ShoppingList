@@ -1,0 +1,57 @@
+body
+{
+    background-color: rgb(175, 214, 250);    
+}
+div
+{
+    text-align: center;
+}
+
+form, fieldset
+{
+    border: none;
+    border-block: 0px;
+}
+
+.add-form
+{
+text-align: center;
+display: none;
+    border: none;
+}
+
+#text_name
+{
+    border: 1px solid crimson;
+}
+
+#welcomeFormBtn, #addProduct, #delProduct
+{
+    border-radius: 25px;
+}
+
+#addProduct, #delProduct
+{
+    margin: 20px;
+}
+
+#name, #amount, #uom, #idToDel
+{
+    width: available;
+}
+
+#email-btn, #print-btn
+{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-left: 50px;
+    margin-top: 20px;
+}
+
+.event-img
+{
+    width: 40px;
+    height: 40px;
+}
+
