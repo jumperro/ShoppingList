@@ -34,6 +34,7 @@ public class ProductController implements AppLogger {
     @DeleteMapping("/{id}")
     ResponseEntity<Product> deleteProduct(@PathVariable Integer id) {
         repository.deleteById(id);
+        logger.info("product deleted, please refresh the site");
         return ResponseEntity.ok().build();
     }
 

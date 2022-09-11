@@ -14,7 +14,13 @@ public class WelcomeService {
 
     public String PrepareGreeting(String name) {
         String welcomeMsg = "shopping list.";
-        String nameToWelcome = Optional.ofNullable(name).orElse(fallback_name);
+        String nameToWelcome;
+        if(name.equals(null) || name.isEmpty()) {
+            nameToWelcome = fallback_name;
+        }
+        else {
+            nameToWelcome = name;
+        }
         return nameToWelcome + "'s" + " " + welcomeMsg + " !";
 
     }

@@ -18,7 +18,7 @@ class WelcomeController implements AppLogger {
 
     @GetMapping(value = "/api")
     String welcome() {
-        return welcome(null);
+        return welcome("unnamed_one");
     }
 
     @GetMapping(value = "/api", params = {"name"})
