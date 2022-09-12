@@ -12,10 +12,10 @@
 	<artifactId>ShoppingList</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>ShoppingList</name>
+	<name>shoppingList</name>
 	<description>Shopping List</description>
 	<properties>
-		<java.version>17</java.version>
+		<java.version>11</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -54,10 +54,25 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.heroku.sdk</groupId>
+			<artifactId>heroku-maven-plugin</artifactId>
+			<version>3.0.4</version>
+			<type>maven-plugin</type>
+		</dependency>
 	</dependencies>
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -74,6 +89,17 @@
 				<groupId>com.heroku.sdk</groupId>
 				<artifactId>heroku-maven-plugin</artifactId>
 				<version>3.0.3</version>
+				<configuration>
+					<appName>ShoppingList</appName>
+					<includeTarget>false</includeTarget>
+					<includes>
+						<include>${project.build.directory}/${project.build.finalName}.jar</include>
+					</includes>
+					<jdkVersion>${java.version}</jdkVersion>
+					<processTypes>
+						<web>java $JAVA_OPTS -jar ${project.build.directory}/${project.build.finalName}.jar</web>
+					</processTypes>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
