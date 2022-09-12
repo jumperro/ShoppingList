@@ -12,7 +12,7 @@
 	<artifactId>ShoppingList</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>shoppingList</name>
+	<name>ShoppingList</name>
 	<description>Shopping List</description>
 	<properties>
 		<java.version>11</java.version>
@@ -34,7 +34,6 @@
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -53,12 +52,6 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.heroku.sdk</groupId>
-			<artifactId>heroku-maven-plugin</artifactId>
-			<version>3.0.4</version>
-			<type>maven-plugin</type>
 		</dependency>
 	</dependencies>
 

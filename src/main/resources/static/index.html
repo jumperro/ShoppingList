@@ -29,14 +29,14 @@
             <button id="delProduct" class="pure-button pure-button-primary">DELETE</button>
         </fieldset>
         <fieldset id="allProducts">
-
-        </fieldset>
-        <fieldset>
             <br>
             <button id="print-btn"><img class="event-img" src="https://cdn-icons-png.flaticon.com/512/3233/3233446.png"
-                    alt="PRINT"></button>
+                                        alt="PRINT"></button>
             <button id="email-btn"><img class="event-img" src="https://img.icons8.com/emoji/344/e-mail.png" alt="EMAIL">
             </button>
+        </fieldset>
+        <fieldset>
+
 
         </fieldset>
     </form>
@@ -49,7 +49,7 @@
     const pUom = document.getElementById('uom');
     const pAmount = document.getElementById('amount');
     const input = document.getElementById('text_name');
-    const btn = document.getElementById('welcomeFormBtn');
+
 
     AddFunction();
 
@@ -141,7 +141,7 @@
         a.print();
     })
 
-    document.getElementById('email').addEventListener('click', (event) => {
+    document.getElementById('email-btn').addEventListener('click', (event) => {
         event.preventDefault();
         window.open('mailto:jumperro@gmail.com?subject=Shopping List&body=' + document.getElementById('allProducts').textContent);
 
